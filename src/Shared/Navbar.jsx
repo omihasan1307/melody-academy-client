@@ -1,11 +1,11 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const active =
     "bg-blue-500 px-4 py-2 rounded lg:mx-5 lg:inline inline-block lg:my-0 my-1 w-full text-white";
   const inActive =
-    " mx-5 inline-block lg:inline inline-block lg:my-0 my-1 w-full";
+    " mx-5 inline-block lg:inline inline-block lg:my-0 my-1 w-full ";
 
   const navItem = (
     <div className=" lg:flex items-center ">
@@ -92,7 +92,7 @@ const Navbar = () => {
               {navItem}
             </ul>
           </div>
-          <a className=" normal-case text-xl font-bold text-blue-600">
+          <a className=" normal-case text-xl font-bold text-blue-500">
             Melody Academy
           </a>
         </div>
@@ -100,7 +100,10 @@ const Navbar = () => {
           <ul className=" px-1">{navItem}</ul>
         </div>
         <div className="navbar-end">
-          <a className="bg-blue-500 px-4 py-2 rounded  text-white">Log In</a>
+          <Link to="/login">
+            {" "}
+            <a className="bg-blue-500 px-4 py-2 rounded  text-white">Log In</a>
+          </Link>
         </div>
       </div>
     </div>
