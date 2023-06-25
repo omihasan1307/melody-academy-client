@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const active =
-    "bg-blue-500 px-4 py-2 rounded lg:mx-5 lg:inline inline-block lg:my-0 my-1 w-full text-white";
+    "bg-purple-800 px-4 py-2 rounded lg:mx-5 lg:inline inline-block lg:my-0 my-1 w-full text-white";
   const inActive =
     " mx-5 inline-block lg:inline inline-block lg:my-0 my-1 w-full ";
 
@@ -92,7 +92,7 @@ const Navbar = () => {
               {navItem}
             </ul>
           </div>
-          <a className=" normal-case text-xl font-bold text-blue-500">
+          <a className=" normal-case text-xl font-bold text-purple-800">
             Melody Academy
           </a>
         </div>
@@ -102,7 +102,9 @@ const Navbar = () => {
         <div className="navbar-end">
           <Link to="/login">
             {" "}
-            <a className="bg-blue-500 px-4 py-2 rounded  text-white">Log In</a>
+            <a className="bg-purple-800 px-4 py-2 rounded  text-white">
+              Log In
+            </a>
           </Link>
         </div>
       </div>
