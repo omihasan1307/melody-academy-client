@@ -1,9 +1,21 @@
-import React from "react";
+import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../providers/AuthProvider";
 
 const Navbar = () => {
+  const { users, loggedOut } = useContext(AuthContext);
+  console.log(users);
+  const handleLoggedOut = () => {
+    loggedOut()
+      .then(() => {})
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  console.log(users);
   const active =
-    "bg-purple-800 px-4 py-2 rounded lg:mx-5 lg:inline inline-block lg:my-0 my-1 w-full text-white";
+    "bgColor px-4 py-2 rounded lg:mx-5 lg:inline inline-block lg:my-0 my-1 w-full text-white";
   const inActive =
     " mx-5 inline-block lg:inline inline-block lg:my-0 my-1 w-full ";
 
@@ -33,35 +45,16 @@ const Navbar = () => {
           Classes
         </NavLink>
       </li>
-      <li>
-        <NavLink
-          to="/appoinment"
-          className={({ isActive }) => (isActive ? active : inActive)}
-        >
-          Dashboard
-        </NavLink>
-      </li>
-      {/* <li>
-      {user ? (
-        <div className="flex justify-center items-center ">
-          <button onClick={handleLogout} className="me-5">
-            LogOut
-          </button>
-          <div className="avatar">
-            <div title={user?.displayName} className="w-10 rounded-full">
-              <img src={user?.photoURL} />
-            </div>
-          </div>
-        </div>
-      ) : (
-        <NavLink
-          to="/login"
-          className={({ isActive }) => (isActive ? active : inActive)}
-        >
-          Login
-        </NavLink>
+      {users && (
+        <li>
+          <NavLink
+            to="/appoinment"
+            className={({ isActive }) => (isActive ? active : inActive)}
+          >
+            Dashboard
+          </NavLink>
+        </li>
       )}
-    </li> */}
     </div>
   );
   return (
@@ -92,7 +85,7 @@ const Navbar = () => {
               {navItem}
             </ul>
           </div>
-          <a className=" normal-case text-xl font-bold text-purple-800">
+          <a className=" normal-case text-xl font-bold textColor">
             Melody Academy
           </a>
         </div>
@@ -100,12 +93,32 @@ const Navbar = () => {
           <ul className=" px-1">{navItem}</ul>
         </div>
         <div className="navbar-end">
-          <Link to="/login">
-            {" "}
-            <a className="bg-purple-800 px-4 py-2 rounded  text-white">
-              Log In
-            </a>
-          </Link>
+          {users ? (
+            <div>
+              {" "}
+              <button
+                onClick={handleLoggedOut}
+                className="bgColor px-4 py-2 rounded  text-white"
+              >
+                Log Out
+              </button>
+            </div>
+          ) : (
+            <Link to="/login">
+              {" "}
+              <a className="bgColor px-4 py-2 rounded  text-white">Log In</a>
+            </Link>
+          )}
+          {users && (
+            <div className="avatar">
+              <div
+                title={users?.displayName}
+                className="w-12 ms-3 rounded-full"
+              >
+                <img src={users?.photoURL} />
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

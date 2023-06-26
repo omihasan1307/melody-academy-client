@@ -1,21 +1,17 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
-import { faEnvelope, faEye } from "@fortawesome/free-regular-svg-icons";
-import { useState } from "react";
+import { faEye } from "@fortawesome/free-regular-svg-icons";
+import { useContext, useState } from "react";
 import logoImg from "../img/authImg.png";
-import {
-  faEnvelopeCircleCheck,
-  faEnvelopeSquare,
-  faLock,
-  faLockOpen,
-  faUserLock,
-} from "@fortawesome/free-solid-svg-icons";
+import Google from "./Google";
+import { AuthContext } from "../providers/AuthProvider";
 
 const Login = () => {
+  const { users } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="min-h-screen grid lg:grid-cols-2 gap-20 items-center my-16 lg:my-0">
+    <div className=" grid lg:grid-cols-2 gap-20 items-center py-20 lg:my-0">
       <div className=" w-[90%] mx-auto ">
         <img className=" h-[80%]" src={logoImg} alt="" />
       </div>
@@ -34,7 +30,7 @@ const Login = () => {
             <div className="relative">
               <div>
                 <input
-                  className="bg-slate-100 w-full border shadow px-5 py-2 rounded my-2 bg-none "
+                  className="focus:outline-none bg-slate-100 w-full border shadow px-5 py-2 rounded my-2 bg-none "
                   type="email"
                   name="email"
                   placeholder="Enter Your Email"
@@ -51,7 +47,7 @@ const Login = () => {
             </label>
             <div className="relative">
               <input
-                className="bg-slate-100 w-full border shadow px-5 py-2 rounded my-2 bg-none "
+                className="focus:outline-none bg-slate-100 w-full border shadow px-5 py-2 rounded my-2 bg-none "
                 type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="Enter Your Password"
@@ -72,19 +68,17 @@ const Login = () => {
               Log In
             </button>
           </div>
-          <div className="divider my-5">OR</div>
-          <button className="w-full text-xl font-semibold bgColor text-white py-2 rounded">
-            Google
-          </button>
-          <div className="mt-10 mx-2">
-            <p className="text-slate-500">
-              New to Melody Academy ?{" "}
-              <Link to="/registration" className="textColor font-bold ">
-                Registration
-              </Link>
-            </p>
-          </div>
         </form>
+        <div className="divider my-5">OR</div>
+        <Google />
+        <div className="mt-10 mx-2">
+          <p className="text-slate-500">
+            New to Melody Academy ?{" "}
+            <Link to="/registration" className="textColor font-bold ">
+              Registration
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );

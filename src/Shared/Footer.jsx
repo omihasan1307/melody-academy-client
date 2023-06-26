@@ -5,7 +5,7 @@ const Footer = () => {
     <div>
       <footer className="footer p-10 bg-base-200 text-base-content">
         <div>
-          <a className=" normal-case text-xl font-bold text-purple-800">
+          <a className=" normal-case text-xl font-bold textColor">
             Melody Academy
           </a>
           <div>
