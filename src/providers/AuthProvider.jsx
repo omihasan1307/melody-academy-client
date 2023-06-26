@@ -33,9 +33,12 @@ const AuthProvider = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  const updatedProfile = (displayName, photo) => {
+  const updatedProfile = (name, photo) => {
     setLoading(true);
-    return updateProfile(auth.currentUser, { displayName, photo });
+    return updateProfile(auth.currentUser, {
+      displayName: name,
+      photoURL: photo,
+    });
   };
 
   const loggedOut = () => {

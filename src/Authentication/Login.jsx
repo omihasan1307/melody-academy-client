@@ -1,14 +1,46 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { useContext, useState } from "react";
 import logoImg from "../img/authImg.png";
 import Google from "./Google";
 import { AuthContext } from "../providers/AuthProvider";
+import { useForm } from "react-hook-form";
+import { enqueueSnackbar } from "notistack";
 
 const Login = () => {
-  const { users } = useContext(AuthContext);
+  const { signUser } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const from = location?.state?.from?.pathname || "/";
+
+  const onSubmit = (data) => {
+    console.log(data);
+    signUser(data?.email, data?.password)
+      .then((res) => {
+        reset();
+        const user = res.user;
+        console.log(user);
+        enqueueSnackbar("User loggedIn successfully", {
+          variant: "success",
+        });
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        enqueueSnackbar("Please enter the correct email & password", {
+          variant: "error",
+        });
+        console.log("dsdd", error.message);
+      });
+  };
 
   return (
     <div className=" grid lg:grid-cols-2 gap-20 items-center py-20 lg:my-0">
@@ -22,7 +54,7 @@ const Login = () => {
             Login Now !
           </h2>
         </div>
-        <form action="">
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-5 ">
             <label className="mx-4 font-semibold textColor" htmlFor="">
               Email :
@@ -30,15 +62,20 @@ const Login = () => {
             <div className="relative">
               <div>
                 <input
+                  {...register("email", {
+                    required: true,
+                  })}
                   className="focus:outline-none bg-slate-100 w-full border shadow px-5 py-2 rounded my-2 bg-none "
                   type="email"
                   name="email"
                   placeholder="Enter Your Email"
                 />
               </div>
-              {/* <div className="text-pink-800 absolute top-4 left-4 ">
-                <FontAwesomeIcon icon={faEnvelope} />
-              </div> */}
+              {errors.email && (
+                <span className="text-red-800 font-semibold mx-3">
+                  This Email field is required
+                </span>
+              )}
             </div>
           </div>
           <div className="mb-5">
@@ -47,6 +84,11 @@ const Login = () => {
             </label>
             <div className="relative">
               <input
+                {...register("password", {
+                  required: true,
+                  maxLength: 6,
+                  pattern: /^[0-9a-z]+$/,
+                })}
                 className="focus:outline-none bg-slate-100 w-full border shadow px-5 py-2 rounded my-2 bg-none "
                 type={showPassword ? "text" : "password"}
                 name="password"
@@ -58,10 +100,22 @@ const Login = () => {
                   icon={faEye}
                 />
               </div>
-              {/* <div className="text-pink-800 absolute top-4 left-4 ">
-                <FontAwesomeIcon icon={faLock} />
-              </div> */}
             </div>
+            {errors.password?.type === "required" && (
+              <span className="text-red-800 font-semibold mx-3">
+                This password field is required
+              </span>
+            )}
+            {errors.password?.type === "maxLength" && (
+              <span className="text-red-800 font-semibold mx-3">
+                This password must be 6 characters
+              </span>
+            )}
+            {errors.password?.type === "pattern" && (
+              <span className="text-red-800 font-semibold mx-3">
+                Password must contain only numbers and lowercase letters
+              </span>
+            )}
           </div>
           <div>
             <button className="w-full text-xl font-semibold bgColor text-white py-2 rounded">

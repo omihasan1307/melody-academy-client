@@ -1,25 +1,55 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
 import { useContext, useState } from "react";
 import registerImg from "../img/register.png";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../providers/AuthProvider";
 import Google from "./Google";
+import { useSnackbar } from "notistack";
 
 const Registration = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const { createUser, updatedProfile } = useContext(AuthContext);
   const [showPassword, setShowPassword] = useState(false);
   const [confirmShowPassword, setConfirmShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
     console.log(data);
+
+    if (data.password === data.confirmPassword) {
+      createUser(data.email, data.password)
+        .then((result) => {
+          const user = result.user;
+          console.log(user);
+          updatedProfile(data?.name, data?.photo)
+            .then(() => {
+              reset();
+              enqueueSnackbar("Welcome to Melody Academy", {
+                variant: "success",
+              });
+              navigate(from, { replace: true });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      enqueueSnackbar("Please match the password", { variant: "error" });
+    }
   };
 
   return (
