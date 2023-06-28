@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../providers/AuthProvider";
 import Google from "./Google";
 import { useSnackbar } from "notistack";
+import axios from "axios";
 
 const Registration = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -31,13 +32,24 @@ const Registration = () => {
       createUser(data.email, data.password)
         .then((result) => {
           const user = result.user;
-          console.log(user);
           updatedProfile(data?.name, data?.photo)
             .then(() => {
-              reset();
-              enqueueSnackbar("Welcome to Melody Academy", {
-                variant: "success",
+              console.log(result.user);
+              const { displayName, email, photoURL, uid } = result.user;
+              axios.post("http://localhost:5000/users", {
+                displayName,
+                email,
+                photoURL,
+                uid,
+                role: "student",
               });
+              reset();
+              enqueueSnackbar(
+                `Hi ${user?.displayName}, Welcome to Melody Academy `,
+                {
+                  variant: "success",
+                }
+              );
               navigate(from, { replace: true });
             })
             .catch((err) => {
@@ -48,7 +60,9 @@ const Registration = () => {
           console.log(err);
         });
     } else {
-      enqueueSnackbar("Please match the password", { variant: "error" });
+      enqueueSnackbar("Wrong password , Please match the password", {
+        variant: "error",
+      });
     }
   };
 

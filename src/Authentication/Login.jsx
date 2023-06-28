@@ -29,9 +29,12 @@ const Login = () => {
         reset();
         const user = res.user;
         console.log(user);
-        enqueueSnackbar("User loggedIn successfully", {
-          variant: "success",
-        });
+        enqueueSnackbar(
+          `Hi ${user?.displayName}, Welcome back to Melody Academy `,
+          {
+            variant: "success",
+          }
+        );
         navigate(from, { replace: true });
       })
       .catch((error) => {

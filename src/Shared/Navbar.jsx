@@ -4,7 +4,7 @@ import { AuthContext } from "../providers/AuthProvider";
 
 const Navbar = () => {
   const { users, loggedOut } = useContext(AuthContext);
-  console.log(users);
+
   const handleLoggedOut = () => {
     loggedOut()
       .then(() => {})
@@ -13,7 +13,6 @@ const Navbar = () => {
       });
   };
 
-  console.log(users);
   const active =
     "bgColor px-4 py-2 rounded lg:mx-5 lg:inline inline-block lg:my-0 my-1 w-full text-white";
   const inActive =
@@ -48,7 +47,7 @@ const Navbar = () => {
       {users && (
         <li>
           <NavLink
-            to="/appoinment"
+            to="/dashboard"
             className={({ isActive }) => (isActive ? active : inActive)}
           >
             Dashboard
