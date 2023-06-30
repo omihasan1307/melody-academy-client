@@ -10,7 +10,12 @@ const useUsers = () => {
     queryKey: ["users", users?.email],
     queryFn: async () => {
       const response = await axios.get(
-        `http://localhost:5000/users?email=${users?.email}`
+        `http://localhost:5000/users?email=${users?.email}`,
+        {
+          headers: {
+            authorization: localStorage.getItem("access_token"),
+          },
+        }
       );
       return response.data;
     },

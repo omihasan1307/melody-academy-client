@@ -1,11 +1,14 @@
-import React from "react";
+import logo from "../img/guitar.png";
 
 const Footer = () => {
   return (
     <div>
       <footer className="footer p-10 bg-base-200 text-base-content">
         <div>
-          <a className=" normal-case text-xl font-bold textColor">
+          <a className=" normal-case text-xl font-bold textColor flex items-center">
+            <div>
+              <img className="w-10 me-1" src={logo} alt="" />
+            </div>
             Melody Academy
           </a>
           <div>

@@ -1,9 +1,12 @@
 import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
+import logo from "../img/guitar.png";
+import useRole from "../hooks/useRole";
 
 const Navbar = () => {
   const { users, loggedOut } = useContext(AuthContext);
+  const [role] = useRole();
 
   const handleLoggedOut = () => {
     loggedOut()
@@ -46,12 +49,32 @@ const Navbar = () => {
       </li>
       {users && (
         <li>
-          <NavLink
-            to="/dashboard"
-            className={({ isActive }) => (isActive ? active : inActive)}
-          >
-            Dashboard
-          </NavLink>
+          {role?.role === "admin" ? (
+            <NavLink
+              to="/admin"
+              className={({ isActive }) => (isActive ? active : inActive)}
+            >
+              Dashboard
+            </NavLink>
+          ) : (
+            <>
+              {role?.role === "instructor" ? (
+                <NavLink
+                  to="/instructor"
+                  className={({ isActive }) => (isActive ? active : inActive)}
+                >
+                  Dashboardss
+                </NavLink>
+              ) : (
+                <NavLink
+                  to="/student"
+                  className={({ isActive }) => (isActive ? active : inActive)}
+                >
+                  Dashboardss
+                </NavLink>
+              )}
+            </>
+          )}
         </li>
       )}
     </div>
@@ -84,7 +107,10 @@ const Navbar = () => {
               {navItem}
             </ul>
           </div>
-          <a className=" normal-case text-xl font-bold textColor">
+          <a className=" normal-case text-xl font-bold textColor flex items-center">
+            <div>
+              <img className="w-10 me-1" src={logo} alt="" />
+            </div>
             Melody Academy
           </a>
         </div>

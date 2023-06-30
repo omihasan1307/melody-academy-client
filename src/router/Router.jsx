@@ -4,12 +4,18 @@ import Login from "../Authentication/Login";
 import Registration from "../Authentication/Registration";
 import Dashboard from "../Pages/Dashboard";
 import NotFound from "../Shared/NotFound";
+import Home from "../Pages/Home/Home";
+import Admin from "../Admin/Admin";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
     children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
       {
         path: "login",
         element: <Login />,
@@ -23,6 +29,11 @@ const router = createBrowserRouter([
         element: <Dashboard />,
       },
     ],
+  },
+  {
+    path: "/admin",
+    element: <Admin />,
+    children: [],
   },
   {
     path: "*",
