@@ -3,13 +3,13 @@ import useUsers from "../hooks/useUsers";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useState } from "react";
 
 const AllUsers = () => {
   const [user, refetch, isLoading] = useUsers();
-  //   console.log(user, );
+  const [roled, setRole] = useState("");
 
   const handleDelete = (user) => {
-    console.log("user", user);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -23,12 +23,32 @@ const AllUsers = () => {
         const res = axios.delete(`http://localhost:5000/users/${user._id}`, {
           user,
         });
+        if (res) {
+          refetch();
+          Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        }
         return res.data;
-        // Swal.fire("Deleted!", "Your file has been deleted.", "success");
       }
     });
   };
 
+  const handleForm = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const roleed = form.role.value;
+    console.log(roleed);
+
+    const res = axios
+      .patch(`http://localhost:5000/users/${roled}`, {
+        role: roleed,
+      })
+      .then((data) => {
+        refetch();
+        console.log(data);
+      });
+
+    return res.data;
+  };
   return (
     <div>
       <div className="bgColor ">
@@ -71,9 +91,31 @@ const AllUsers = () => {
                     {user.role === "admin" ? (
                       <div className="btn  bgColor  text-white">Admin</div>
                     ) : (
-                      <div className="btn  bg-pink-800  text-white">
-                        {user.role}
-                      </div>
+                      <>
+                        {user._id === roled ? (
+                          <div>
+                            <form onSubmit={handleForm}>
+                              <select
+                                name="role"
+                                className="border rounded px-2 border-pink-900"
+                              >
+                                <option value="admin">Admin</option>
+                                <option value="instructor">Instructor</option>
+                              </select>
+
+                              <input type="submit" value="y" />
+                              <br />
+                              <input type="submit" value="x" />
+                            </form>
+                            {/* <button>yes</button>
+                            <button>x</button> */}
+                          </div>
+                        ) : (
+                          <div className="btn  bg-pink-800  text-white">
+                            {user.role}
+                          </div>
+                        )}
+                      </>
                     )}
                   </td>
                   <td>
@@ -85,12 +127,16 @@ const AllUsers = () => {
                     </button>
                   </td>
                   <td>
-                    <button
-                      //   onClick={() => handleDelete(user)}
-                      className="btn btn-ghost bg-green-600  text-white"
-                    >
-                      <FontAwesomeIcon icon={faEdit} />
-                    </button>
+                    {user.role === "student" ? (
+                      <button
+                        onClick={() => setRole(user._id)}
+                        className="btn btn-ghost bg-green-600  text-white"
+                      >
+                        <FontAwesomeIcon icon={faEdit} />
+                      </button>
+                    ) : (
+                      "Can't update"
+                    )}
                   </td>
                 </tr>
               ))}

@@ -41,7 +41,7 @@ const Login = () => {
         enqueueSnackbar("Please enter the correct email & password", {
           variant: "error",
         });
-        console.log("dsdd", error.message);
+        console.log("", error.message);
       });
   };
 

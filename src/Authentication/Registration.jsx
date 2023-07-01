@@ -52,12 +52,13 @@ const Registration = () => {
               );
               navigate(from, { replace: true });
             })
-            .catch((err) => {
-              console.log(err);
-            });
+            .catch((err) => {});
         })
         .catch((err) => {
-          console.log(err);
+          enqueueSnackbar("User already logged in", {
+            variant: "error",
+          });
+          console.log("", err.message);
         });
     } else {
       enqueueSnackbar("Wrong password , Please match the password", {
