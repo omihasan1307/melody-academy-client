@@ -1,8 +1,11 @@
-import useUsers from "../hooks/useUsers";
+import { NavLink, Outlet } from "react-router-dom";
 
 const Admin = () => {
-  const [user, refetch] = useUsers();
-  console.log(user);
+  const active =
+    "bgColor px-4 py-2 rounded lg:mx-5 lg:inline inline-block lg:my-0 my-1 w-full text-white";
+  const inActive =
+    " mx-5 inline-block lg:inline inline-block lg:my-0 my-1 w-full ";
+
   return (
     <div>
       <div className="drawer lg:drawer-open">
@@ -26,19 +29,27 @@ const Admin = () => {
               ></path>
             </svg>
           </label>
-          {user.map((e) => (
-            <li key={e._id}>{e.email}</li>
-          ))}
+          <Outlet />
         </div>
         <div className="drawer-side">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
           <ul className="menu p-4 w-80 h-full bg-base-200 text-base-content">
             {/* Sidebar content here */}
             <li>
-              <a>Users</a>
+              <NavLink
+                to="/admin/users"
+                className={({ isActive }) => (isActive ? active : inActive)}
+              >
+                users
+              </NavLink>
             </li>
             <li>
-              <a>Sidebar Item 2</a>
+              <NavLink
+                to="/ss"
+                className={({ isActive }) => (isActive ? active : inActive)}
+              >
+                cons
+              </NavLink>
             </li>
           </ul>
         </div>

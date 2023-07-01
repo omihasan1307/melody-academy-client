@@ -4,10 +4,15 @@ import { AuthContext } from "../providers/AuthProvider";
 import axios from "axios";
 
 const useUsers = () => {
-  const { users } = useContext(AuthContext);
+  const { users, loading } = useContext(AuthContext);
 
-  const { refetch, data: user = [] } = useQuery({
+  const {
+    refetch,
+    data: user = [],
+    isLoading,
+  } = useQuery({
     queryKey: ["users", users?.email],
+    enabled: !loading,
     queryFn: async () => {
       const response = await axios.get(
         `http://localhost:5000/users?email=${users?.email}`,
@@ -20,6 +25,6 @@ const useUsers = () => {
       return response.data;
     },
   });
-  return [user, refetch];
+  return [user, refetch, isLoading];
 };
 export default useUsers;

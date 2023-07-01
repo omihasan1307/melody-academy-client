@@ -51,7 +51,7 @@ const Navbar = () => {
         <li>
           {role?.role === "admin" ? (
             <NavLink
-              to="/admin"
+              to="admin/users"
               className={({ isActive }) => (isActive ? active : inActive)}
             >
               Dashboard
