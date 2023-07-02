@@ -7,6 +7,10 @@ import NotFound from "../Shared/NotFound";
 import Home from "../Pages/Home/Home";
 import Admin from "../Admin/Admin";
 import AllUsers from "../Admin/AllUsers";
+import Instructor from "../Instructor/Instructor";
+import AddClasses from "../Instructor/AddClasses";
+import Profile from "../Instructor/Profile";
+import Classes from "./Classes";
 
 const router = createBrowserRouter([
   {
@@ -25,10 +29,24 @@ const router = createBrowserRouter([
         path: "registration",
         element: <Registration />,
       },
-      // {
-      //   path: "dashboard",
-      //   element: <Dashboard />,
-      // },
+      {
+        path: "instructor",
+        element: <Instructor />,
+        children: [
+          {
+            path: "addClasses",
+            element: <AddClasses />,
+          },
+          {
+            path: "profile",
+            element: <Profile />,
+          },
+          {
+            path: "classes",
+            element: <Classes />,
+          },
+        ],
+      },
     ],
   },
   {

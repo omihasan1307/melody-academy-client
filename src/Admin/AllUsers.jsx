@@ -1,6 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useUsers from "../hooks/useUsers";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheck,
+  faEdit,
+  faTrash,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useState } from "react";
@@ -35,12 +40,11 @@ const AllUsers = () => {
   const handleForm = (event) => {
     event.preventDefault();
     const form = event.target;
-    const roleed = form.role.value;
-    console.log(roleed);
+    const role = form.role.value;
 
     const res = axios
       .patch(`http://localhost:5000/users/${roled}`, {
-        role: roleed,
+        role: role,
       })
       .then((data) => {
         refetch();
@@ -103,12 +107,16 @@ const AllUsers = () => {
                                 <option value="instructor">Instructor</option>
                               </select>
 
-                              <input type="submit" value="y" />
-                              <br />
-                              <input type="submit" value="x" />
+                              <button className=" mx-2 border px-2 rounded-lg bg-green-600 text-white">
+                                <FontAwesomeIcon icon={faCheck} />
+                              </button>
                             </form>
-                            {/* <button>yes</button>
-                            <button>x</button> */}
+                            <button
+                              onClick={() => setRole("")}
+                              className=" mx-2 border px-2 rounded-lg bg-red-600 text-white "
+                            >
+                              <FontAwesomeIcon icon={faXmark} />
+                            </button>
                           </div>
                         ) : (
                           <div className="btn  bg-pink-800  text-white">

@@ -2,9 +2,9 @@ import { NavLink, Outlet } from "react-router-dom";
 
 const Admin = () => {
   const active =
-    "bgColor px-4 py-2 rounded lg:mx-5 lg:inline inline-block lg:my-0 my-1 w-full text-white";
+    "bgColor px-4 py-2 rounded lg:mx-5 lg:inline inline-block w-full text-white text-xl";
   const inActive =
-    " mx-5 inline-block lg:inline inline-block lg:my-0 my-1 w-full ";
+    " mx-5 inline-block lg:inline inline-block lg:my-0 my-1 w-full  ";
 
   return (
     <div>
@@ -33,8 +33,7 @@ const Admin = () => {
         </div>
         <div className="drawer-side">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-          <ul className="menu p-4 w-80 h-full bg-base-200 text-base-content">
-            {/* Sidebar content here */}
+          <ul className="menu p-4 w-80 h-full text-white lg:text-base-content bg-slate-500   lg:bg-base-200 bg-opacity-20 backdrop-filter backdrop-blur-md">
             <li>
               <NavLink
                 to="/admin/users"
@@ -49,6 +48,14 @@ const Admin = () => {
                 className={({ isActive }) => (isActive ? active : inActive)}
               >
                 cons
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/"
+                className={({ isActive }) => (isActive ? active : inActive)}
+              >
+                Home
               </NavLink>
             </li>
           </ul>

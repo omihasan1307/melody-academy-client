@@ -60,17 +60,17 @@ const Navbar = () => {
             <>
               {role?.role === "instructor" ? (
                 <NavLink
-                  to="/instructor"
+                  to="instructor"
                   className={({ isActive }) => (isActive ? active : inActive)}
                 >
-                  Dashboardss
+                  Dashboard
                 </NavLink>
               ) : (
                 <NavLink
                   to="/student"
                   className={({ isActive }) => (isActive ? active : inActive)}
                 >
-                  Dashboardss
+                  Dashboard
                 </NavLink>
               )}
             </>
