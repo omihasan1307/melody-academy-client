@@ -13,7 +13,7 @@ import { useState } from "react";
 const AllUsers = () => {
   const [user, refetch, isLoading] = useUsers();
   const [roled, setRole] = useState("");
-
+  console.log(roled);
   const handleDelete = (user) => {
     Swal.fire({
       title: "Are you sure?",
@@ -25,14 +25,16 @@ const AllUsers = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        const res = axios.delete(`http://localhost:5000/users/${user._id}`, {
-          user,
-        });
-        if (res) {
-          refetch();
-          Swal.fire("Deleted!", "Your file has been deleted.", "success");
-        }
-        return res.data;
+        axios
+          .delete(`http://localhost:5000/users/${user._id}`, {
+            user,
+          })
+          .then((res) => {
+            refetch();
+            if (res) {
+              Swal.fire("Deleted!", "Your class has been deleted.", "success");
+            }
+          });
       }
     });
   };

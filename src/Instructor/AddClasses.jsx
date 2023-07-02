@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../providers/AuthProvider";
 import axios from "axios";
+import { enqueueSnackbar } from "notistack";
 
 const img_hosting_token = import.meta.env.VITE_Image_Upload_token;
 
@@ -58,6 +59,9 @@ const AddClasses = () => {
             }
           )
           .then((data) => {
+            enqueueSnackbar(`Hi ${users?.displayName}, Your class added `, {
+              variant: "success",
+            });
             console.log("sending done", data);
           });
       }

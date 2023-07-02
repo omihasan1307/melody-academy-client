@@ -10,7 +10,8 @@ import AllUsers from "../Admin/AllUsers";
 import Instructor from "../Instructor/Instructor";
 import AddClasses from "../Instructor/AddClasses";
 import Profile from "../Instructor/Profile";
-import Classes from "./Classes";
+import Classes from "../Instructor/Classes";
+import PrivateRoutes from "./PrivateRoutes";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +32,11 @@ const router = createBrowserRouter([
       },
       {
         path: "instructor",
-        element: <Instructor />,
+        element: (
+          <PrivateRoutes>
+            <Instructor />
+          </PrivateRoutes>
+        ),
         children: [
           {
             path: "addClasses",
@@ -51,7 +56,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <Admin />,
+    element: (
+      <PrivateRoutes>
+        <Admin />
+      </PrivateRoutes>
+    ),
     children: [
       {
         path: "users",
