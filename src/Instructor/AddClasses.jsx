@@ -42,8 +42,8 @@ const AddClasses = () => {
           description,
           email,
           name,
-          price,
-          seats,
+          price: parseFloat(price),
+          seats: parseInt(seats),
           photo: imgURL,
           status: null,
         };

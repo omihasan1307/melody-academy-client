@@ -5,9 +5,8 @@ import axios from "axios";
 
 const useRole = () => {
   const { users, loading } = useContext(AuthContext);
-  console.log(users);
 
-  const { data: role } = useQuery({
+  const { data: role, isLoading } = useQuery({
     queryKey: ["role", users?.email],
     enabled: !loading,
     queryFn: async () => {
@@ -22,8 +21,8 @@ const useRole = () => {
       return res.data;
     },
   });
-  console.log(role);
-  return [role];
+
+  return [role, isLoading];
 };
 
 export default useRole;

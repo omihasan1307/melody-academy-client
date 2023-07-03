@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router-dom";
 import Main from "../layout/Main";
 import Login from "../Authentication/Login";
 import Registration from "../Authentication/Registration";
-import Dashboard from "../Pages/Dashboard";
 import NotFound from "../Shared/NotFound";
 import Home from "../Pages/Home/Home";
 import Admin from "../Admin/Admin";
@@ -12,6 +11,8 @@ import AddClasses from "../Instructor/AddClasses";
 import Profile from "../Instructor/Profile";
 import Classes from "../Instructor/Classes";
 import PrivateRoutes from "./PrivateRoutes";
+import AllClass from "../Admin/AllClass";
+import PrivateAdminRouter from "./PrivateAdminRouter";
 
 const router = createBrowserRouter([
   {
@@ -57,14 +58,18 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: (
-      <PrivateRoutes>
+      <PrivateAdminRouter>
         <Admin />
-      </PrivateRoutes>
+      </PrivateAdminRouter>
     ),
     children: [
       {
         path: "users",
         element: <AllUsers />,
+      },
+      {
+        path: "classes",
+        element: <AllClass />,
       },
     ],
   },

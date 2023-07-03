@@ -1,19 +1,28 @@
 import { useContext } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import { Navigate, useLocation } from "react-router-dom";
+import useRole from "../hooks/useRole";
 
 const PrivateRoutes = ({ children }) => {
+  const [role, isLoading] = useRole();
+  console.log(role);
   const { users, loading } = useContext(AuthContext);
   const location = useLocation();
 
-  if (users) {
+  if (users && role?.role != "admin") {
     return children;
   }
-  if (loading) {
+  if (loading && isLoading) {
     return <progress className="progress w-56"></progress>;
   }
 
-  return <Navigate to="/login" state={{ from: location }} replace />;
+  {
+    return role?.role === "admin" ? (
+      <Navigate to="/" state={{ from: location }} replace />
+    ) : (
+      <Navigate to="/login" state={{ from: location }} replace />
+    );
+  }
 };
 
 export default PrivateRoutes;
