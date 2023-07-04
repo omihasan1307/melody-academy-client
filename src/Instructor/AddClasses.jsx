@@ -7,7 +7,7 @@ import { enqueueSnackbar } from "notistack";
 const img_hosting_token = import.meta.env.VITE_Image_Upload_token;
 
 const AddClasses = () => {
-  const { users } = useContext(AuthContext);
+  const { users, loggedOut } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -62,7 +62,9 @@ const AddClasses = () => {
             enqueueSnackbar(`Hi ${users?.displayName}, Your class added `, {
               variant: "success",
             });
-            console.log("sending done", data);
+            // loggedOut();
+
+            console.log("sending done", data.data);
           });
       }
       reset();

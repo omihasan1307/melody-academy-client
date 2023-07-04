@@ -1,23 +1,22 @@
 import { Navigate, useLocation } from "react-router-dom";
 import useRole from "../hooks/useRole";
-import { AuthContext } from "../providers/AuthProvider";
 import { useContext } from "react";
+import { AuthContext } from "../providers/AuthProvider";
 
-const PrivateAdminRouter = ({ children }) => {
+const PrivateInstructorRouter = ({ children }) => {
   const { users, loading } = useContext(AuthContext);
   const [role, isLoading] = useRole();
 
   const location = useLocation();
 
-  if (users || role?.role === "admin") {
+  if (role?.role === "instructor") {
     return children;
   }
-  if (loading || isLoading) {
+  if (isLoading) {
     return <progress className="progress w-56"></progress>;
   } else {
     {
-      return (users && role?.role === "instructor") ||
-        role?.role === "student" ? (
+      return (users && role?.role === "admin") || role?.role === "student" ? (
         <Navigate to="/" state={{ from: location }} replace />
       ) : (
         <Navigate to="/login" state={{ from: location }} replace />
@@ -26,4 +25,4 @@ const PrivateAdminRouter = ({ children }) => {
   }
 };
 
-export default PrivateAdminRouter;
+export default PrivateInstructorRouter;

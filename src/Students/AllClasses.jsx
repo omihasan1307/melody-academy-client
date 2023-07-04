@@ -4,39 +4,45 @@ import { AuthContext } from "../providers/AuthProvider";
 import axios from "axios";
 import moment from "moment/moment";
 import { enqueueSnackbar } from "notistack";
+import { Navigate, useNavigate } from "react-router-dom";
+import useRole from "../hooks/useRole";
 
 const AllClasses = () => {
+  const [role] = useRole();
   const { users } = useContext(AuthContext);
   const [classes, refetch, isLoading] = useAllClasses();
+  const navigate = useNavigate();
 
   const create = moment().format("MMMM Do YYYY, h:mm:ss a");
 
   const handleAddtoCart = (item) => {
-    console.log(item);
-
-    axios
-      .post(
-        `http://localhost:5000/cart?email=${users?.email}`,
-        {
-          create,
-          item,
-          userEmail: users?.email,
-        },
-        {
-          headers: {
-            authorization: localStorage.getItem("access_token"),
-          },
-        }
-      )
-      .then((data) => {
-        enqueueSnackbar(
-          `Hi ${users?.displayName}, Your Product has been added `,
+    if (users) {
+      axios
+        .post(
+          `http://localhost:5000/cart?email=${users?.email}`,
           {
-            variant: "success",
+            create,
+            item,
+            userEmail: users?.email,
+          },
+          {
+            headers: {
+              authorization: localStorage.getItem("access_token"),
+            },
           }
-        );
-        console.log(data);
-      });
+        )
+        .then((data) => {
+          enqueueSnackbar(
+            `Hi ${users?.displayName}, Your Product has been added `,
+            {
+              variant: "success",
+            }
+          );
+          console.log(data);
+        });
+    } else {
+      navigate("/login");
+    }
   };
 
   return (
@@ -66,6 +72,13 @@ const AllClasses = () => {
                 </h2>
                 <h2 className="text-normal mt-2"> Price: ${cls.price}</h2>
                 <button
+                  disabled={
+                    role?.role === "student" && cls.seats > 0
+                      ? false
+                      : (isLoading && !role && cls.seats === 0) || role
+                      ? true
+                      : false
+                  }
                   onClick={() => handleAddtoCart(cls)}
                   className="uppercase bgColor text-white w-full mt-4 py-2 rounded"
                 >

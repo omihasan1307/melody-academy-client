@@ -17,6 +17,8 @@ import AllClasses from "../Students/AllClasses";
 import Students from "../Students/Students";
 import Cart from "../Students/Cart";
 import Payment from "../Students/Payment";
+import PrivateInstructorRouter from "./PrivateInstructorRoute";
+import PrivateStudentRouter from "./PrivateStudentRoute";
 
 const router = createBrowserRouter([
   {
@@ -42,13 +44,13 @@ const router = createBrowserRouter([
       {
         path: "student",
         element: (
-          <PrivateRoutes>
+          <PrivateStudentRouter>
             <Students />
-          </PrivateRoutes>
+          </PrivateStudentRouter>
         ),
         children: [
           {
-            path: "payment",
+            path: "cart/payment",
             element: <Payment />,
           },
           {
@@ -60,9 +62,9 @@ const router = createBrowserRouter([
       {
         path: "instructor",
         element: (
-          <PrivateRoutes>
+          <PrivateInstructorRouter>
             <Instructor />
-          </PrivateRoutes>
+          </PrivateInstructorRouter>
         ),
         children: [
           {

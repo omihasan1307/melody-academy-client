@@ -22,6 +22,7 @@ const useUsers = () => {
           },
         }
       );
+
       return response.data;
     },
   });

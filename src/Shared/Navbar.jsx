@@ -10,7 +10,7 @@ import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 const Navbar = () => {
   const { users, loggedOut } = useContext(AuthContext);
   const { theme, setTheme } = useContext(MyContext);
-  console.log(theme);
+
   const [role] = useRole();
 
   const handleLoggedOut = () => {
