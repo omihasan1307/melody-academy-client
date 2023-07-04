@@ -16,6 +16,7 @@ import PrivateAdminRouter from "./PrivateAdminRouter";
 import AllClasses from "../Students/AllClasses";
 import Students from "../Students/Students";
 import Cart from "../Students/Cart";
+import Payment from "../Students/Payment";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
           </PrivateRoutes>
         ),
         children: [
+          {
+            path: "payment",
+            element: <Payment />,
+          },
           {
             path: "cart",
             element: <Cart />,

@@ -58,16 +58,13 @@ const AllClasses = () => {
               </div>
               <div className="mt-5">
                 <h2 className="text-xl font-bold textColor">{cls.className}</h2>
-                <h2 className="text-normal text-black mt-2">
+                <h2 className="text-normal  mt-2">
                   Instructor Name : {cls.name}
                 </h2>
-                <h2 className="text-normal text-black mt-2">
+                <h2 className="text-normal mt-2">
                   Available Seats: {cls.seats}
                 </h2>
-                <h2 className="text-normal text-black mt-2">
-                  {" "}
-                  Price: ${cls.price}
-                </h2>
+                <h2 className="text-normal mt-2"> Price: ${cls.price}</h2>
                 <button
                   onClick={() => handleAddtoCart(cls)}
                   className="uppercase bgColor text-white w-full mt-4 py-2 rounded"

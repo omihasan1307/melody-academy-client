@@ -5,6 +5,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { AuthContext } from "../providers/AuthProvider";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
   const { users } = useContext(AuthContext);
@@ -89,9 +90,9 @@ const Cart = () => {
             <hr className="w-80 mx-auto " />
             <h1 className="mx-10 mt-5 text-xl">Total Item : {cart.length}</h1>
             <h1 className="mx-10 mt-5 text-xl">Total Bill : ${totalPrice}</h1>
-            <button className="w-[80%] bgColor text-white py-2 my-5 rounded mx-10">
-              Process to Checkout
-            </button>
+            <div className="w-[80%] bgColor text-white py-2 my-5 rounded mx-10">
+              <Link to="payment">Process to Checkout</Link>
+            </div>
           </div>
         </div>
       )}

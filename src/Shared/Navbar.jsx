@@ -3,9 +3,14 @@ import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
 import logo from "../img/guitar.png";
 import useRole from "../hooks/useRole";
+import { MyContext } from "../providers/ThemeProvider";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
   const { users, loggedOut } = useContext(AuthContext);
+  const { theme, setTheme } = useContext(MyContext);
+  console.log(theme);
   const [role] = useRole();
 
   const handleLoggedOut = () => {
@@ -118,6 +123,10 @@ const Navbar = () => {
           <ul className=" px-1">{navItem}</ul>
         </div>
         <div className="navbar-end">
+          <button className="me-5 text-xl" onClick={() => setTheme(!theme)}>
+            <FontAwesomeIcon icon={theme ? faSun : faMoon} />
+          </button>
+
           {users ? (
             <div>
               {" "}
