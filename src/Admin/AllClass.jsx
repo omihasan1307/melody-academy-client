@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import { useContext, useState } from "react";
 import useAllClasses from "../hooks/useAllClasses";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { AuthContext } from "../providers/AuthProvider";
 
 const AllClass = () => {
+  const { users } = useContext(AuthContext);
   const [classes, refetch, isLoading] = useAllClasses();
-  const [approve, setApprove] = useState("");
-  console.log("approve", approve);
+  // const [deny, setDeny] = useState({});
+  // console.log("dd", deny);
 
   const handleDelete = (_id) => {
     console.log("object", _id._id);
@@ -32,6 +34,30 @@ const AllClass = () => {
           });
       }
     });
+  };
+
+  const handleApprove = (approve) => {
+    console.log(approve);
+    axios
+      .patch(
+        `http://localhost:5000/updateStatus/${approve._id}?email=${users?.email}`,
+        {
+          status: "approved",
+        },
+        {
+          headers: {
+            authorization: localStorage.getItem("access_token"),
+          },
+        }
+      )
+      .then((data) => {
+        refetch();
+        console.log(data.data);
+      });
+  };
+
+  const handleDeny = (deny) => {
+    console.log("deny", deny);
   };
 
   return (
@@ -80,16 +106,51 @@ const AllClass = () => {
                   <td>{cls.seats}</td>
                   <td>${cls.price}</td>
 
-                  <td> pending </td>
                   <td>
                     {" "}
+                    {cls.status === "approved" ? (
+                      <button className="btn bgColor text-white">
+                        Approved
+                      </button>
+                    ) : cls.status === "deny" ? (
+                      "denied"
+                    ) : (
+                      <p className="textColor font-bold text-base">
+                        pending...
+                      </p>
+                    )}
+                  </td>
+                  <td>
                     <button
-                      onClick={() => setApprove(cls)}
-                      className="btn bg-green-800 text-white"
+                      onClick={() => handleApprove(cls)}
+                      disabled={
+                        cls.status === "approved" ||
+                        (cls.status === "deny" && true)
+                      }
+                      className={`btn text-white ${
+                        cls.status === "approved" || cls.status === "deny"
+                          ? "bg-gray-400"
+                          : "bg-green-800"
+                      }`}
                     >
                       Approve
-                    </button>{" "}
-                    <button className="btn bg-red-800 text-white">Deny</button>{" "}
+                    </button>
+                    <button
+                      onClick={() => {
+                        () => handleDeny(cls), window.my_modal_2.showModal();
+                      }}
+                      disabled={
+                        cls.status === "approved" ||
+                        (cls.status === "deny" && true)
+                      }
+                      className={`btn text-white ${
+                        cls.status === "approved" || cls.status === "deny"
+                          ? "bg-gray-400"
+                          : "bg-green-800"
+                      }`}
+                    >
+                      Deny
+                    </button>
                   </td>
 
                   <td>
@@ -107,6 +168,29 @@ const AllClass = () => {
           </table>
         </div>
       )}
+      <dialog id="my_modal_2" className="modal">
+        <form method="dialog" className="modal-box">
+          <label className="mx-4 font-semibold textColor">Status</label>
+          <input
+            className="bg-slate-100 w-full border shadow px-5 py-2 rounded my-2 bg-none focus:outline-none"
+            type="text"
+            name="status"
+            defaultValue="deny"
+            readOnly
+          />
+          <label className="mx-4 font-semibold textColor">FeedBack</label>
+          <input
+            className="bg-slate-100 w-full border shadow px-5 py-2 rounded my-2 bg-none focus:outline-none"
+            type="text"
+            name="feedback"
+            placeholder="Give FeedBack"
+          />
+          <button className="btn w-full bgColor text-white my-2">Submit</button>
+        </form>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
     </div>
   );
 };

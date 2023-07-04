@@ -24,15 +24,7 @@ const Classes = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(
-            `http://localhost:5000/manageClasses/${_id._id}`,
-            { _id },
-            {
-              headers: {
-                authorization: localStorage.getItem("access_token"),
-              },
-            }
-          )
+          .delete(`http://localhost:5000/manageClasses/${_id._id}`, { _id })
           .then((res) => {
             refetch();
             if (res) {
@@ -114,12 +106,20 @@ const Classes = () => {
                         pending
                       </button>{" "}
                     </td>
-                  ) : (
+                  ) : cls.status === "approved" ? (
                     <td>
                       {" "}
                       <button className="btn  bg-green-600  text-white ">
                         {" "}
-                        pending
+                        Approved
+                      </button>{" "}
+                    </td>
+                  ) : (
+                    <td>
+                      {" "}
+                      <button className="btn  bg-red-600  text-white ">
+                        {" "}
+                        Deny
                       </button>{" "}
                     </td>
                   )}

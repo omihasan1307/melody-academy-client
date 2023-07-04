@@ -1,0 +1,79 @@
+import React, { useContext, useState } from "react";
+import useAllClasses from "../hooks/useAllClasses";
+import { AuthContext } from "../providers/AuthProvider";
+import axios from "axios";
+import moment from "moment/moment";
+
+const AllClasses = () => {
+  const { users } = useContext(AuthContext);
+  const [classes, refetch, isLoading] = useAllClasses();
+
+  const create = moment().format("MMMM Do YYYY, h:mm:ss a");
+
+  const handleAddtoCart = (item) => {
+    console.log(item);
+
+    axios
+      .post(
+        `http://localhost:5000/cart?email=${users?.email}`,
+        {
+          create,
+          item,
+          userEmail: users?.email,
+        },
+        {
+          headers: {
+            authorization: localStorage.getItem("access_token"),
+          },
+        }
+      )
+      .then((data) => {
+        console.log(data);
+      });
+  };
+
+  return (
+    <div className="flex justify-center my-10">
+      {isLoading ? (
+        <div className="flex items-center justify-center min-h-screen">
+          <span className="loading loading-ring loading-lg text-secondary mx-auto "></span>
+        </div>
+      ) : (
+        <div className="grid lg:grid-cols-3 gap-20  ">
+          {classes.map((cls) => (
+            <div key={cls._id} className="border px-8 py-10 rounded-xl">
+              <div className=" rounded-3xl">
+                <img
+                  className="object-cover w-[300px] h-[200px] rounded-xl"
+                  src={cls?.photo}
+                  alt=""
+                />
+              </div>
+              <div className="mt-5">
+                <h2 className="text-xl font-bold textColor">{cls.className}</h2>
+                <h2 className="text-normal text-black mt-2">
+                  Instructor Name : {cls.name}
+                </h2>
+                <h2 className="text-normal text-black mt-2">
+                  Available Seats: {cls.seats}
+                </h2>
+                <h2 className="text-normal text-black mt-2">
+                  {" "}
+                  Price: ${cls.price}
+                </h2>
+                <button
+                  onClick={() => handleAddtoCart(cls)}
+                  className="uppercase bgColor text-white w-full mt-4 py-2 rounded"
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default AllClasses;

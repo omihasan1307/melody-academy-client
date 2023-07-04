@@ -41,7 +41,7 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink
-          to="/appoinment"
+          to="/classes"
           className={({ isActive }) => (isActive ? active : inActive)}
         >
           Classes

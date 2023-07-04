@@ -13,6 +13,7 @@ import Classes from "../Instructor/Classes";
 import PrivateRoutes from "./PrivateRoutes";
 import AllClass from "../Admin/AllClass";
 import PrivateAdminRouter from "./PrivateAdminRouter";
+import AllClasses from "../Students/AllClasses";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />,
+      },
+      {
+        path: "classes",
+        element: <AllClasses />,
       },
       {
         path: "registration",

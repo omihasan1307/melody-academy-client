@@ -13,7 +13,7 @@ import { useState } from "react";
 const AllUsers = () => {
   const [user, refetch, isLoading] = useUsers();
   const [roled, setRole] = useState("");
-  console.log(roled);
+
   const handleDelete = (user) => {
     Swal.fire({
       title: "Are you sure?",
