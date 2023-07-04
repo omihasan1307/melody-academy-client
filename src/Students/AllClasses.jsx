@@ -3,6 +3,7 @@ import useAllClasses from "../hooks/useAllClasses";
 import { AuthContext } from "../providers/AuthProvider";
 import axios from "axios";
 import moment from "moment/moment";
+import { enqueueSnackbar } from "notistack";
 
 const AllClasses = () => {
   const { users } = useContext(AuthContext);
@@ -28,6 +29,12 @@ const AllClasses = () => {
         }
       )
       .then((data) => {
+        enqueueSnackbar(
+          `Hi ${users?.displayName}, Your Product has been added `,
+          {
+            variant: "success",
+          }
+        );
         console.log(data);
       });
   };

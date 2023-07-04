@@ -22,7 +22,6 @@ const useUserCart = () => {
           },
         }
       );
-
       return response.data;
     },
   });
