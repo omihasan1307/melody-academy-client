@@ -14,6 +14,8 @@ import PrivateRoutes from "./PrivateRoutes";
 import AllClass from "../Admin/AllClass";
 import PrivateAdminRouter from "./PrivateAdminRouter";
 import AllClasses from "../Students/AllClasses";
+import Students from "../Students/Students";
+import Cart from "../Students/Cart";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +37,20 @@ const router = createBrowserRouter([
       {
         path: "registration",
         element: <Registration />,
+      },
+      {
+        path: "student",
+        element: (
+          <PrivateRoutes>
+            <Students />
+          </PrivateRoutes>
+        ),
+        children: [
+          {
+            path: "cart",
+            element: <Cart />,
+          },
+        ],
       },
       {
         path: "instructor",
