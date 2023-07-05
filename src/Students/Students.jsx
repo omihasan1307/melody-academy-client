@@ -19,13 +19,13 @@ const Students = () => {
             My Selected CLass
           </NavLink>
           <NavLink
-            to="classes"
+            to="payment"
             className={({ isActive }) => (isActive ? active : inActive)}
           >
             Payment History
           </NavLink>
           <NavLink
-            to="profile"
+            to="enroll"
             className={({ isActive }) => (isActive ? active : inActive)}
           >
             My Enroll Classes

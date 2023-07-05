@@ -19,6 +19,9 @@ import Cart from "../Students/Cart";
 import Payment from "../Students/Payment";
 import PrivateInstructorRouter from "./PrivateInstructorRoute";
 import PrivateStudentRouter from "./PrivateStudentRoute";
+import PaymentHistory from "../Students/PaymentHistory";
+import Enroll from "../Students/Enroll";
+import PopularInstructor from "../Pages/Home/PopularInstructor";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />,
+      },
+      {
+        path: "popularInstructor",
+        element: <PopularInstructor />,
       },
       {
         path: "classes",
@@ -56,6 +63,14 @@ const router = createBrowserRouter([
           {
             path: "cart",
             element: <Cart />,
+          },
+          {
+            path: "payment",
+            element: <PaymentHistory />,
+          },
+          {
+            path: "enroll",
+            element: <Enroll />,
           },
         ],
       },

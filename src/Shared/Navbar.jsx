@@ -38,7 +38,7 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink
-          to="/about"
+          to="/popularInstructor"
           className={({ isActive }) => (isActive ? active : inActive)}
         >
           Instructors

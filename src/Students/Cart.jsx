@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 const Cart = () => {
   const [cart, refetch, isLoading] = useUserCart();
   console.log("cart", cart);
-  const totalPrice = cart.reduce((sum, item) => sum + item?.item?.price, 0);
+  const totalPrice = cart.reduce((sum, item) => sum + item?.price, 0);
 
   const handleDelete = (item) => {
     console.log(item);
@@ -42,58 +42,71 @@ const Cart = () => {
           <span className="loading loading-ring loading-lg text-secondary mx-auto "></span>
         </div>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-6 lg:gap-10 mx-10 lg:mx-5 my-8">
-          <div className="col-span-4 ">
-            {" "}
-            {cart.map((cart) => (
-              <div key={cart._id} className="lg:flex my-5">
-                <div className=" border ">
-                  <img
-                    className="w-full h-[200px] lg:w-[300px] lg:h-[150px] object-cover rounded "
-                    src={cart?.item?.photo}
-                    alt=""
-                  />
-                </div>
-                <div className="flex justify-between items-center w-full lg:my-0 my-5 lg:ms-10">
-                  <div>
-                    <h2 className="textColor font-bold text-xl">
-                      {cart?.item?.className}
-                    </h2>
-                    <h2 className=" mt-2 text-base">
-                      Instructor : {cart?.item?.name}
-                    </h2>
-                    <h2 className=" mt-2 text-base">
-                      Instructor Email : {cart?.item?.email}
-                    </h2>
-                    <h2 className=" mt-2 text-base">
-                      price : ${cart?.item?.price}
-                    </h2>
-                  </div>
+        <>
+          {cart.length > 0 ? (
+            <div className="grid grid-cols-1 lg:grid-cols-6 lg:gap-10 mx-10 lg:mx-5 my-8">
+              <div className="col-span-4 ">
+                .....
+                {cart.map((cart) => (
+                  <div key={cart._id} className="lg:flex my-5">
+                    <div className=" border ">
+                      <img
+                        className="w-full h-[200px] lg:w-[300px] lg:h-[150px] object-cover rounded "
+                        src={cart?.photo}
+                        alt=""
+                      />
+                    </div>
+                    <div className="flex justify-between items-center w-full lg:my-0 my-5 lg:ms-10">
+                      <div>
+                        <h2 className="textColor font-bold text-xl">
+                          {cart?.className}
+                        </h2>
+                        <h2 className=" mt-2 text-base">
+                          Instructor : {cart?.name}
+                        </h2>
+                        <h2 className=" mt-2 text-base">
+                          Instructor Email : {cart?.email}
+                        </h2>
+                        <h2 className=" mt-2 text-base">
+                          price : ${cart?.price}
+                        </h2>
+                      </div>
 
-                  <div>
-                    <button
-                      onClick={() => handleDelete(cart)}
-                      className="btn btn-ghost bg-red-600  text-white"
-                    >
-                      <FontAwesomeIcon icon={faTrash} />
-                    </button>
+                      <div>
+                        <button
+                          onClick={() => handleDelete(cart)}
+                          className="btn btn-ghost bg-red-600  text-white"
+                        >
+                          <FontAwesomeIcon icon={faTrash} />
+                        </button>
+                      </div>
+                    </div>
                   </div>
+                ))}
+              </div>
+              <div className="col-span-2 border lg:mt-0 mt-5 h-[280px]">
+                <h1 className="text-center my-5 text-2xl textColor font-bold ">
+                  Order Summary
+                </h1>
+                <hr className="w-80 mx-auto " />
+                <h1 className="mx-10 mt-5 text-xl">
+                  Total Item : {cart.length}
+                </h1>
+                <h1 className="mx-10 mt-5 text-xl">
+                  Total Bill : ${totalPrice}
+                </h1>
+                <div className="w-[80%] bgColor text-center text-white py-2 my-5 rounded mx-10">
+                  <Link to="payment">Process to Checkout</Link>
                 </div>
               </div>
-            ))}
-          </div>
-          <div className="col-span-2 border lg:mt-0 mt-5 h-[280px]">
-            <h1 className="text-center my-5 text-2xl textColor font-bold ">
-              Order Summary
-            </h1>
-            <hr className="w-80 mx-auto " />
-            <h1 className="mx-10 mt-5 text-xl">Total Item : {cart.length}</h1>
-            <h1 className="mx-10 mt-5 text-xl">Total Bill : ${totalPrice}</h1>
-            <div className="w-[80%] bgColor text-center text-white py-2 my-5 rounded mx-10">
-              <Link to="payment">Process to Checkout</Link>
             </div>
-          </div>
-        </div>
+          ) : (
+            <div className="text-center my-10 text-2xl font-bold textColor">
+              {" "}
+              Empty Cart.....
+            </div>
+          )}
+        </>
       )}
     </div>
   );

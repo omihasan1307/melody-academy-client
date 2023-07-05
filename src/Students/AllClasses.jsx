@@ -22,7 +22,7 @@ const AllClasses = () => {
           `http://localhost:5000/cart?email=${users?.email}`,
           {
             create,
-            item,
+            ...item,
             userEmail: users?.email,
           },
           {

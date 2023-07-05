@@ -9,7 +9,8 @@ const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_PK);
 const Payment = () => {
   const [cart, refetch, isLoading] = useUserCart();
   console.log("cart", cart);
-  const totalPrice = cart.reduce((sum, item) => sum + item?.item?.price, 0);
+  const totalPrice = cart.reduce((sum, item) => sum + item?.price, 0);
+  const price = parseFloat(totalPrice.toFixed(2));
   return (
     <div>
       {isLoading ? (
@@ -25,24 +26,22 @@ const Payment = () => {
                 <div className=" border ">
                   <img
                     className="w-full h-[200px] lg:w-[300px] lg:h-[150px] object-cover rounded "
-                    src={cart?.item?.photo}
+                    src={cart?.photo}
                     alt=""
                   />
                 </div>
                 <div className="flex justify-between items-center w-full lg:my-0 my-5 lg:ms-10">
                   <div>
                     <h2 className="textColor font-bold text-xl">
-                      {cart?.item?.className}
+                      {cart?.className}
                     </h2>
                     <h2 className=" mt-2 text-base">
-                      Instructor : {cart?.item?.name}
+                      Instructor : {cart?.name}
                     </h2>
                     <h2 className=" mt-2 text-base">
-                      Instructor Email : {cart?.item?.email}
+                      Instructor Email : {cart?.email}
                     </h2>
-                    <h2 className=" mt-2 text-base">
-                      price : ${cart?.item?.price}
-                    </h2>
+                    <h2 className=" mt-2 text-base">price : ${cart?.price}</h2>
                   </div>
                 </div>
               </div>
@@ -60,12 +59,12 @@ const Payment = () => {
                   Total Item : {cart.length}
                 </h1>
                 <h1 className="mx-10 mt-5 text-xl border px-6 py-4 bg-gray-100">
-                  Total Bill : ${totalPrice}
+                  Total Bill : ${price}
                 </h1>
               </div>
               <div>
                 <Elements stripe={stripePromise}>
-                  <Checkout />
+                  <Checkout price={price} cart={cart} />
                 </Elements>
               </div>
             </div>
