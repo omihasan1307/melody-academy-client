@@ -1,9 +1,9 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const PopularInstructor = () => {
   const [instructor, setInstructor] = useState([]);
-  console.log(instructor);
+
   useEffect(() => {
     axios.get(`http://localhost:5000/popularInstructor`).then((data) => {
       setInstructor(data.data);

@@ -9,6 +9,7 @@ import useRole from "../hooks/useRole";
 
 const AllClasses = () => {
   const [role] = useRole();
+
   const { users } = useContext(AuthContext);
   const [classes, refetch, isLoading] = useAllClasses();
   const navigate = useNavigate();
@@ -16,13 +17,37 @@ const AllClasses = () => {
   const create = moment().format("MMMM Do YYYY, h:mm:ss a");
 
   const handleAddtoCart = (item) => {
+    console.log(item);
+    const {
+      _id,
+      className,
+      email,
+      photo,
+      enroll,
+      name,
+      price,
+      seats,
+      status,
+      category,
+      description,
+    } = item;
     if (users) {
       axios
         .post(
           `http://localhost:5000/cart?email=${users?.email}`,
           {
             create,
-            ...item,
+            classesID: _id,
+            className,
+            email,
+            photo,
+            enroll,
+            name,
+            price,
+            seats,
+            status,
+            category,
+            description,
             userEmail: users?.email,
           },
           {
@@ -32,13 +57,21 @@ const AllClasses = () => {
           }
         )
         .then((data) => {
-          enqueueSnackbar(
-            `Hi ${users?.displayName}, Your Product has been added `,
-            {
-              variant: "success",
-            }
-          );
-          console.log(data);
+          if (data.data.isExist) {
+            enqueueSnackbar(
+              `Hi ${users?.displayName}, Your Product Already  added `,
+              {
+                variant: "error",
+              }
+            );
+          } else {
+            enqueueSnackbar(
+              `Hi ${users?.displayName}, Your Product has been added `,
+              {
+                variant: "success",
+              }
+            );
+          }
         });
     } else {
       navigate("/login");
@@ -54,7 +87,12 @@ const AllClasses = () => {
       ) : (
         <div className="grid lg:grid-cols-3 gap-20  ">
           {classes.map((cls) => (
-            <div key={cls._id} className="border px-8 py-10 rounded-xl">
+            <div
+              key={cls._id}
+              className={`border px-8 py-10 rounded-xl ${
+                cls.seats > 0 ? "bg-white" : "bg-red-800 text-white"
+              }`}
+            >
               <div className=" rounded-3xl">
                 <img
                   className="object-cover w-[300px] h-[200px] rounded-xl"
@@ -80,7 +118,9 @@ const AllClasses = () => {
                       : false
                   }
                   onClick={() => handleAddtoCart(cls)}
-                  className="uppercase bgColor text-white w-full mt-4 py-2 rounded"
+                  className={`uppercase  text-white w-full mt-4 py-2 rounded ${
+                    cls.seats > 0 ? "bgColor" : "bg-slate-600"
+                  }`}
                 >
                   Add to Cart
                 </button>

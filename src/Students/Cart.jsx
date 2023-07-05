@@ -46,7 +46,6 @@ const Cart = () => {
           {cart.length > 0 ? (
             <div className="grid grid-cols-1 lg:grid-cols-6 lg:gap-10 mx-10 lg:mx-5 my-8">
               <div className="col-span-4 ">
-                .....
                 {cart.map((cart) => (
                   <div key={cart._id} className="lg:flex my-5">
                     <div className=" border ">

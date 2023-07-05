@@ -8,6 +8,8 @@ import { SnackbarProvider } from "notistack";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import ThemeProvider from "./providers/ThemeProvider";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const queryClient = new QueryClient();
 
