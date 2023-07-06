@@ -58,7 +58,7 @@ const AddClasses = () => {
         console.log("newItem", newItem);
         axios
           .post(
-            `http://localhost:5000/manageClasses?email=${users?.email}`,
+            `https://summer-camp-server-three-gamma.vercel.app/manageClasses?email=${users?.email}`,
             newItem,
             {
               headers: {

@@ -14,7 +14,7 @@ const useClasses = () => {
     enabled: !loading,
     queryFn: async () => {
       const res = await axios.get(
-        `http://localhost:5000/instructorClass?email=${users?.email}`
+        `https://summer-camp-server-three-gamma.vercel.app/instructorClass?email=${users?.email}`
       );
 
       return res.data;

@@ -14,7 +14,9 @@ const useAllClasses = () => {
     queryKey: ["allClasses"],
     enabled: !loading,
     queryFn: async () => {
-      const response = await axios.get(`http://localhost:5000/allClasses`);
+      const response = await axios.get(
+        `https://summer-camp-server-three-gamma.vercel.app/allClasses`
+      );
       return response.data;
     },
   });

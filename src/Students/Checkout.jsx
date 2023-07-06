@@ -18,7 +18,10 @@ const Checkout = ({ price, cart }) => {
 
   useEffect(() => {
     axios
-      .post("http://localhost:5000/create-payment-intent", { price })
+      .post(
+        "https://summer-camp-server-three-gamma.vercel.app/create-payment-intent",
+        { price }
+      )
       .then((res) => {
         console.log(res.data.clientSecret);
         setClientSecret(res.data.clientSecret);
@@ -64,7 +67,7 @@ const Checkout = ({ price, cart }) => {
     } else {
       axios
         .post(
-          `http://localhost:5000/payment?email=${users?.email}`,
+          `https://summer-camp-server-three-gamma.vercel.app/payment?email=${users?.email}`,
           {
             transactionId: paymentIntent.id,
             name: users?.displayName,

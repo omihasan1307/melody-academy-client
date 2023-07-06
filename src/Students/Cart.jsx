@@ -25,7 +25,10 @@ const Cart = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:5000/cart/${item._id}`, { item })
+          .delete(
+            `https://summer-camp-server-three-gamma.vercel.app/cart/${item._id}`,
+            { item }
+          )
           .then((res) => {
             refetch();
             if (res) {

@@ -17,7 +17,7 @@ const Google = () => {
         const user = res.user;
         console.log(user);
         const { displayName, email, photoURL, uid } = res.user;
-        axios.post("http://localhost:5000/users", {
+        axios.post("https://summer-camp-server-three-gamma.vercel.app/users", {
           displayName,
           email,
           photoURL,

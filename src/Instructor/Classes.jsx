@@ -27,7 +27,10 @@ const Classes = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:5000/manageClasses/${_id._id}`, { _id })
+          .delete(
+            `https://summer-camp-server-three-gamma.vercel.app/manageClasses/${_id._id}`,
+            { _id }
+          )
           .then((res) => {
             refetch();
             if (res) {
@@ -53,7 +56,7 @@ const Classes = () => {
 
     axios
       .patch(
-        `http://localhost:5000/allClasses/${updateData._id}?email=${users?.email}`,
+        `https://summer-camp-server-three-gamma.vercel.app/allClasses/${updateData._id}?email=${users?.email}`,
         update,
         {
           headers: {

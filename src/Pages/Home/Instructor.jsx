@@ -6,9 +6,13 @@ const Instructor = () => {
   const [instructor, setInstructor] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/popularInstructor`).then((data) => {
-      setInstructor(data.data);
-    });
+    axios
+      .get(
+        `https://summer-camp-server-three-gamma.vercel.app/popularInstructor`
+      )
+      .then((data) => {
+        setInstructor(data.data);
+      });
   }, []);
   return (
     <div>

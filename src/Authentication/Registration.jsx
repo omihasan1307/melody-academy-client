@@ -37,13 +37,16 @@ const Registration = () => {
             .then(() => {
               console.log(result.user);
               const { displayName, email, photoURL, uid } = result.user;
-              axios.post("http://localhost:5000/users", {
-                displayName,
-                email,
-                photoURL,
-                uid,
-                role: "student",
-              });
+              axios.post(
+                "https://summer-camp-server-three-gamma.vercel.app/users",
+                {
+                  displayName,
+                  email,
+                  photoURL,
+                  uid,
+                  role: "student",
+                }
+              );
               reset();
               enqueueSnackbar(
                 `Hi ${user?.displayName}, Welcome to Melody Academy `,

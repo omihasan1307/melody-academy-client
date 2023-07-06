@@ -15,7 +15,7 @@ const useUsers = () => {
     enabled: !loading,
     queryFn: async () => {
       const response = await axios.get(
-        `http://localhost:5000/users?email=${users?.email}`,
+        `https://summer-camp-server-three-gamma.vercel.app/users?email=${users?.email}`,
         {
           headers: {
             authorization: localStorage.getItem("access_token"),

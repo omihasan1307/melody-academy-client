@@ -26,9 +26,12 @@ const AllUsers = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:5000/users/${user._id}`, {
-            user,
-          })
+          .delete(
+            `https://summer-camp-server-three-gamma.vercel.app/users/${user._id}`,
+            {
+              user,
+            }
+          )
           .then((res) => {
             refetch();
             if (res) {
@@ -45,9 +48,12 @@ const AllUsers = () => {
     const role = form.role.value;
 
     axios
-      .patch(`http://localhost:5000/users/${roled}`, {
-        role: role,
-      })
+      .patch(
+        `https://summer-camp-server-three-gamma.vercel.app/users/${roled}`,
+        {
+          role: role,
+        }
+      )
       .then((data) => {
         refetch();
         console.log(data);

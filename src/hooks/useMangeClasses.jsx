@@ -10,7 +10,7 @@ const useMangeClasses = () => {
     enabled: !loading,
     queryFn: async () => {
       const response = await axios.get(
-        `http://localhost:5000/manageClasses?email=${users?.email}`,
+        `https://summer-camp-server-three-gamma.vercel.app/manageClasses?email=${users?.email}`,
         {
           headers: {
             authorization: localStorage.getItem("access_token"),

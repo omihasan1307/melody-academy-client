@@ -11,7 +11,7 @@ const useRole = () => {
     enabled: !loading,
     queryFn: async () => {
       const res = await axios.get(
-        `http://localhost:5000/role?email=${users?.email}`,
+        `https://summer-camp-server-three-gamma.vercel.app/role?email=${users?.email}`,
         {
           headers: {
             authorization: localStorage.getItem("access_token"),

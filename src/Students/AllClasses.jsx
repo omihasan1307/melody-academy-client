@@ -35,7 +35,7 @@ const AllClasses = () => {
     if (users) {
       axios
         .post(
-          `http://localhost:5000/cart?email=${users?.email}`,
+          `https://summer-camp-server-three-gamma.vercel.app/cart?email=${users?.email}`,
           {
             create,
             classesID: _id,

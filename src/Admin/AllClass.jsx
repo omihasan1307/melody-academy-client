@@ -25,7 +25,10 @@ const AllClass = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:5000/allClasses/${_id._id}`, { _id })
+          .delete(
+            `https://summer-camp-server-three-gamma.vercel.app/allClasses/${_id._id}`,
+            { _id }
+          )
           .then((res) => {
             refetch();
             if (res) {
@@ -40,7 +43,7 @@ const AllClass = () => {
     console.log(approve);
     axios
       .patch(
-        `http://localhost:5000/updateStatus/${approve._id}?email=${users?.email}`,
+        `https://summer-camp-server-three-gamma.vercel.app/updateStatus/${approve._id}?email=${users?.email}`,
         {
           status: "approved",
         },
@@ -63,7 +66,7 @@ const AllClass = () => {
     const feedback = form.feedback.value;
     axios
       .patch(
-        `http://localhost:5000/updateStatus/${deny._id}?email=${users?.email}`,
+        `https://summer-camp-server-three-gamma.vercel.app/updateStatus/${deny._id}?email=${users?.email}`,
         {
           status: status,
           feedback: feedback,

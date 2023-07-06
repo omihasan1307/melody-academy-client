@@ -15,7 +15,7 @@ const useUserCart = () => {
     enabled: !loading,
     queryFn: async () => {
       const response = await axios.get(
-        `http://localhost:5000/cart?email=${users?.email}`,
+        `https://summer-camp-server-three-gamma.vercel.app/cart?email=${users?.email}`,
         {
           headers: {
             authorization: localStorage.getItem("access_token"),
