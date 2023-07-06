@@ -11,8 +11,8 @@ const Instructor = () => {
   }, []);
   return (
     <div>
-      <h2 className="textColor text-4xl font-bold text-center my-10">
-        Instructor
+      <h2 className="text-4xl font-bold text-center mt-28 mb-16">
+        Popular <span className="textColor"> Instructor</span>
       </h2>
       {!instructor ? (
         <div className="flex items-center justify-center min-h-screen">

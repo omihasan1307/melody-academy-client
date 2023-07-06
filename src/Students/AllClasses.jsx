@@ -110,6 +110,7 @@ const AllClasses = () => {
                   Available Seats: {cls.seats}
                 </h2>
                 <h2 className="text-normal mt-2"> Price: ${cls.price}</h2>
+                <h2 className=" mt-2 text-base">Enrolled : {cls?.enroll}</h2>
                 <button
                   disabled={
                     role?.role === "student" && cls.seats > 0

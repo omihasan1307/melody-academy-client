@@ -8,34 +8,42 @@ const img_hosting_token = import.meta.env.VITE_Image_Upload_token;
 
 const AddClasses = () => {
   const { users, loggedOut } = useContext(AuthContext);
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
 
   const img_hosting_url = `https://api.imgbb.com/1/upload?key=${img_hosting_token}`;
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const handleSubmit = (data) => {
+    data.preventDefault();
+
+    const form = data.target;
+    const className = form.className.value;
+    const price = form.price.value;
+    const seats = form.seats.value;
+    const name = form.instructorName.value;
+    const email = form.instructorEmail.value;
+    const category = form.category.value;
+    const photo = form?.photo?.files[0];
+    const description = form.description.value;
+
+    const allData = {
+      className,
+      price,
+      email,
+      name,
+      category,
+      photo,
+      description,
+      seats,
+    };
+
     const formData = new FormData();
-    formData.append("image", data.photo[0]);
+    formData.append("image", photo);
 
     axios.post(img_hosting_url, formData).then((res) => {
-      // console.log(res.data.data);
       if (res.data.success) {
         const imgURL = res.data.data.display_url;
-        const {
-          category,
-          className,
-          description,
-          email,
-          name,
-          price,
-          seats,
-          photo,
-        } = data;
+
+        const { category, className, description, email, name, price, seats } =
+          allData;
         const newItem = {
           category,
           className,
@@ -62,36 +70,29 @@ const AddClasses = () => {
             enqueueSnackbar(`Hi ${users?.displayName}, Your class added `, {
               variant: "success",
             });
-            // loggedOut();
-
             console.log("sending done", data.data);
           });
       }
-      reset();
+      form.reset();
     });
   };
 
   return (
     <div>
       <div className="w-[80%] lg:w-[70%] border shadow-lg px-8 py-10 bg-slate-50 rounded  mx-auto my-10">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label className="mx-4 font-semibold textColor" htmlFor="">
               Class Name
             </label>{" "}
             <br />
             <input
-              {...register("className", { required: true })}
               className="bg-slate-100 w-full border shadow px-5 py-2 rounded my-2 bg-none focus:outline-none"
               type="text"
               name="className"
               placeholder="Class Name"
+              required
             />
-            {errors.className && (
-              <span className="text-red-800 font-semibold mx-3">
-                This Class Name field is required
-              </span>
-            )}
           </div>
           <div className="flex ">
             <div className="mb-3 w-[50%] me-5">
@@ -100,17 +101,12 @@ const AddClasses = () => {
               </label>{" "}
               <br />
               <input
-                {...register("price", { required: true })}
                 className="bg-slate-100 w-full border shadow px-5 py-2 rounded my-2 bg-none focus:outline-none"
                 type="number"
                 name="price"
                 placeholder="price"
+                required
               />
-              {errors.price && (
-                <span className="text-red-800 font-semibold mx-3">
-                  This Price field is required
-                </span>
-              )}
             </div>
             <div className="mb-3 w-[50%]">
               <label className="mx-4 font-semibold textColor" htmlFor="">
@@ -118,17 +114,12 @@ const AddClasses = () => {
               </label>{" "}
               <br />
               <input
-                {...register("seats", { required: true })}
                 className="bg-slate-100 w-full border shadow px-5 py-2 rounded my-2 bg-none focus:outline-none"
                 type="number"
                 name="seats"
                 placeholder="Available Seats"
+                required
               />
-              {errors.seats && (
-                <span className="text-red-800 font-semibold mx-3">
-                  This Seats field is required
-                </span>
-              )}
             </div>
           </div>
           <div className="mb-3">
@@ -137,7 +128,6 @@ const AddClasses = () => {
             </label>{" "}
             <br />
             <select
-              {...register("category", { required: true })}
               defaultValue="Pick One"
               name="category"
               className="bg-slate-100 w-full border shadow px-5 py-2 rounded my-2 bg-none focus:outline-none"
@@ -149,11 +139,6 @@ const AddClasses = () => {
               <option>Bass</option>
               <option>Piano</option>
             </select>
-            {errors.cateogory && (
-              <span className="text-red-800 font-semibold mx-3">
-                This category field is required
-              </span>
-            )}
           </div>
           <div className="mb-3">
             <label className="mx-4 font-semibold textColor">
@@ -161,8 +146,8 @@ const AddClasses = () => {
             </label>{" "}
             <br />
             <input
-              {...register("name", { required: true })}
               className="bg-slate-100 w-full border shadow px-5 py-2 rounded my-2 bg-none focus:outline-none"
+              name="instructorName"
               type="text"
               defaultValue={users?.displayName}
               readOnly
@@ -174,9 +159,9 @@ const AddClasses = () => {
             </label>{" "}
             <br />
             <input
-              {...register("email", { required: true })}
               className="bg-slate-100 w-full border shadow px-5 py-2 rounded my-2 bg-none focus:outline-none"
               type="text"
+              name="instructorEmail"
               defaultValue={users?.email}
               readOnly
             />
@@ -188,16 +173,10 @@ const AddClasses = () => {
             <br />
             <div className="form-control w-full">
               <input
-                {...register("photo", { required: true })}
                 type="file"
                 className="file-input file-input-bordered w-full  my-2 "
                 name="photo"
               />
-              {errors.photo && (
-                <span className="text-red-800 font-semibold mx-3">
-                  This Image field is required
-                </span>
-              )}
             </div>
           </div>
           <div className="mb-3">
@@ -206,16 +185,10 @@ const AddClasses = () => {
             </label>{" "}
             <br />
             <textarea
-              {...register("description", { required: true })}
               className="textarea bg-slate-100 w-full border shadow px-5 py-2 rounded my-2 bg-none focus:outline-none "
               placeholder="Description"
               name="description"
             ></textarea>
-            {errors.description && (
-              <span className="text-red-800 font-semibold mx-3">
-                This description field is required
-              </span>
-            )}
           </div>
           <div>
             <input
