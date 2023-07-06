@@ -74,7 +74,7 @@ const Banner = () => {
             <div>
               <p className="text-xl lg:text-2xl font-bold">
                 Welcome to the
-                <span className=" normal-case lg:text-2xl  textColor ">
+                <span className=" normal-case lg:text-2xl textColor ">
                   {""} Melody World
                 </span>
               </p>

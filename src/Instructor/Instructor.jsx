@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 import { NavLink, Outlet } from "react-router-dom";
 
 const Instructor = () => {
@@ -6,6 +7,9 @@ const Instructor = () => {
   const inActive = "tab tab-bordered";
   return (
     <div>
+      <Helmet>
+        <title>Melody Academy || Instructor Dashboard</title>
+      </Helmet>
       <div className="bgColor ">
         <h5 className="text-white text-center text-2xl font-bold py-20">
           Instructor

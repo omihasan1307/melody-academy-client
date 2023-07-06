@@ -8,6 +8,7 @@ import { AuthContext } from "../providers/AuthProvider";
 import Google from "./Google";
 import { useSnackbar } from "notistack";
 import axios from "axios";
+import { Helmet } from "react-helmet";
 
 const Registration = () => {
   const { enqueueSnackbar } = useSnackbar();
@@ -69,6 +70,9 @@ const Registration = () => {
 
   return (
     <div className=" grid lg:grid-cols-2 gap-20 items-center py-10  lg:my-0">
+      <Helmet>
+        <title>Melody Academy || Registration</title>
+      </Helmet>
       <div className=" w-[90%] mx-auto ">
         <img className=" h-[80%]" src={registerImg} alt="" />
       </div>

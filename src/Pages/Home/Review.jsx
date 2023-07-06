@@ -1,6 +1,7 @@
 import { faStar } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { Fade } from "react-awesome-reveal";
 import Slider from "react-slick";
 
 const Review = () => {
@@ -65,7 +66,11 @@ const Review = () => {
   };
   return (
     <div>
-      <h2 className="textColor text-4xl font-bold text-center my-10">Review</h2>
+      <Fade>
+        <h2 className="textColor text-4xl font-bold text-center my-10">
+          Review
+        </h2>
+      </Fade>
       <Slider {...settings}>
         {data.map((e, index) => (
           <div key={index} className="mx-20 my-10">

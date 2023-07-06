@@ -7,6 +7,7 @@ import Google from "./Google";
 import { AuthContext } from "../providers/AuthProvider";
 import { useForm } from "react-hook-form";
 import { enqueueSnackbar } from "notistack";
+import { Helmet } from "react-helmet";
 
 const Login = () => {
   const { signUser } = useContext(AuthContext);
@@ -47,6 +48,9 @@ const Login = () => {
 
   return (
     <div className=" grid lg:grid-cols-2 gap-20 items-center py-20 lg:my-0">
+      <Helmet>
+        <title>Melody Academy || Login </title>
+      </Helmet>
       <div className=" w-[90%] mx-auto ">
         <img className=" h-[80%]" src={logoImg} alt="" />
       </div>

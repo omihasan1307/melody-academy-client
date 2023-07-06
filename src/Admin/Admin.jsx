@@ -1,3 +1,6 @@
+import { faHouse, faList, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Helmet } from "react-helmet";
 import { NavLink, Outlet } from "react-router-dom";
 
 const Admin = () => {
@@ -7,6 +10,9 @@ const Admin = () => {
     " mx-5 inline-block lg:inline inline-block lg:my-0 my-1 w-full ";
   return (
     <div>
+      <Helmet>
+        <title>Melody Academy || Admin Dashboard</title>
+      </Helmet>
       <div className="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
@@ -38,7 +44,7 @@ const Admin = () => {
                 to="/admin/users"
                 className={({ isActive }) => (isActive ? active : inActive)}
               >
-                users
+                <FontAwesomeIcon className="me-3" icon={faUsers} /> users
               </NavLink>
             </li>
             <li>
@@ -46,7 +52,7 @@ const Admin = () => {
                 to="/admin/classes"
                 className={({ isActive }) => (isActive ? active : inActive)}
               >
-                All Classes
+                <FontAwesomeIcon className="me-3" icon={faList} /> All Classes
               </NavLink>
             </li>
             <li>
@@ -54,7 +60,7 @@ const Admin = () => {
                 to="/"
                 className={({ isActive }) => (isActive ? active : inActive)}
               >
-                Home
+                <FontAwesomeIcon className="me-3" icon={faHouse} /> Home
               </NavLink>
             </li>
           </ul>

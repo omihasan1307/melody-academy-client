@@ -6,6 +6,7 @@ import moment from "moment/moment";
 import { enqueueSnackbar } from "notistack";
 import { useNavigate } from "react-router-dom";
 import useRole from "../hooks/useRole";
+import { Helmet } from "react-helmet";
 
 const AllClasses = () => {
   const [role] = useRole();
@@ -87,6 +88,9 @@ const AllClasses = () => {
         </div>
       ) : (
         <div className="grid lg:grid-cols-3 gap-20  ">
+          <Helmet>
+            <title>Melody Academy || Class</title>
+          </Helmet>
           {classes.map((cls) => (
             <div
               key={cls._id}
@@ -107,10 +111,12 @@ const AllClasses = () => {
                   Instructor Name : {cls.name}
                 </h2>
                 <h2 className="text-normal mt-2">
-                  Available Seats: {cls.seats}
+                  Available Seats: {cls?.seats}
                 </h2>
                 <h2 className="text-normal mt-2"> Price: ${cls.price}</h2>
-                <h2 className=" mt-2 text-base">Enrolled : {cls?.enroll}</h2>
+                <h2 className=" mt-2 text-base">
+                  Enrolled : {cls?.enroll ? cls?.enroll : "0"}
+                </h2>
                 <button
                   disabled={
                     role?.role === "student" && cls.seats > 0
