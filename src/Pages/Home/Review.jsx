@@ -65,7 +65,7 @@ const Review = () => {
   };
   return (
     <div>
-      <h2 className="textColor text-4xl font-bold text-center my-4">Review</h2>
+      <h2 className="textColor text-4xl font-bold text-center my-10">Review</h2>
       <Slider {...settings}>
         {data.map((e, index) => (
           <div key={index} className="mx-20 my-10">

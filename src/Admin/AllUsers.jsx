@@ -44,7 +44,7 @@ const AllUsers = () => {
     const form = event.target;
     const role = form.role.value;
 
-    const res = axios
+    axios
       .patch(`http://localhost:5000/users/${roled}`, {
         role: role,
       })
@@ -52,8 +52,6 @@ const AllUsers = () => {
         refetch();
         console.log(data);
       });
-
-    return res.data;
   };
   return (
     <div>

@@ -10,15 +10,17 @@ const useClasses = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["manageClasses", users?.email],
+    queryKey: ["instructorClass"],
     enabled: !loading,
     queryFn: async () => {
       const res = await axios.get(
-        `http://localhost:5000/manageClasses?email=${users?.email}`
+        `http://localhost:5000/instructorClass?email=${users?.email}`
       );
+
       return res.data;
     },
   });
+  console.log("object", classData);
   return [classData, isLoading, refetch];
 };
 

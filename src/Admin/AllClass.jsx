@@ -5,12 +5,12 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { AuthContext } from "../providers/AuthProvider";
+import useMangeClasses from "../hooks/useMangeClasses";
 
 const AllClass = () => {
   const { users } = useContext(AuthContext);
-  const [classes, refetch, isLoading] = useAllClasses();
-  // const [deny, setDeny] = useState({});
-  // console.log("dd", deny);
+  const [data, refetch, isLoading] = useMangeClasses();
+  const [deny, setDeny] = useState({});
 
   const handleDelete = (_id) => {
     console.log("object", _id._id);
@@ -56,8 +56,31 @@ const AllClass = () => {
       });
   };
 
-  const handleDeny = (deny) => {
-    console.log("deny", deny);
+  const handleDeny = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const status = form.status.value;
+    const feedback = form.feedback.value;
+    axios
+      .patch(
+        `http://localhost:5000/updateStatus/${deny._id}?email=${users?.email}`,
+        {
+          status: status,
+          feedback: feedback,
+        },
+        {
+          headers: {
+            authorization: localStorage.getItem("access_token"),
+          },
+        }
+      )
+      .then((data) => {
+        refetch();
+        data.data;
+      });
+
+    // console.log("object", denyData);
+    console.log("deny", status, feedback);
   };
 
   return (
@@ -89,7 +112,7 @@ const AllClass = () => {
               </tr>
             </thead>
             <tbody className="text-left ">
-              {classes.map((cls, index) => (
+              {data?.map((cls, index) => (
                 <tr key={index} className="hover">
                   <td>{index + 1}</td>
                   <td>
@@ -113,7 +136,9 @@ const AllClass = () => {
                         Approved
                       </button>
                     ) : cls.status === "deny" ? (
-                      "denied"
+                      <button className="btn bg-red-600 text-white">
+                        Denied
+                      </button>
                     ) : (
                       <p className="textColor font-bold text-base">
                         pending...
@@ -137,7 +162,7 @@ const AllClass = () => {
                     </button>
                     <button
                       onClick={() => {
-                        () => handleDeny(cls), window.my_modal_2.showModal();
+                        setDeny(cls), window.my_modal_2.showModal();
                       }}
                       disabled={
                         cls.status === "approved" ||
@@ -152,7 +177,6 @@ const AllClass = () => {
                       Deny
                     </button>
                   </td>
-
                   <td>
                     {" "}
                     <button
@@ -169,7 +193,7 @@ const AllClass = () => {
         </div>
       )}
       <dialog id="my_modal_2" className="modal">
-        <form method="dialog" className="modal-box">
+        <form method="dialog" className="modal-box" onSubmit={handleDeny}>
           <label className="mx-4 font-semibold textColor">Status</label>
           <input
             className="bg-slate-100 w-full border shadow px-5 py-2 rounded my-2 bg-none focus:outline-none"

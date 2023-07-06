@@ -4,12 +4,12 @@ import { AuthContext } from "../providers/AuthProvider";
 import axios from "axios";
 import moment from "moment/moment";
 import { enqueueSnackbar } from "notistack";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useRole from "../hooks/useRole";
 
 const AllClasses = () => {
   const [role] = useRole();
-
+  console.log(role);
   const { users } = useContext(AuthContext);
   const [classes, refetch, isLoading] = useAllClasses();
   const navigate = useNavigate();
@@ -57,6 +57,7 @@ const AllClasses = () => {
           }
         )
         .then((data) => {
+          refetch();
           if (data.data.isExist) {
             enqueueSnackbar(
               `Hi ${users?.displayName}, Your Product Already  added `,
@@ -90,7 +91,7 @@ const AllClasses = () => {
             <div
               key={cls._id}
               className={`border px-8 py-10 rounded-xl ${
-                cls.seats > 0 ? "bg-white" : "bg-red-800 text-white"
+                cls.seats > 0 ? "bg-white" : "bg-red-300 text-white"
               }`}
             >
               <div className=" rounded-3xl">

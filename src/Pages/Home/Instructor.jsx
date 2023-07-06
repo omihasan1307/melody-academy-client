@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const PopularInstructor = () => {
+const Instructor = () => {
   const [instructor, setInstructor] = useState([]);
 
   useEffect(() => {
@@ -11,13 +11,16 @@ const PopularInstructor = () => {
   }, []);
   return (
     <div>
+      <h2 className="textColor text-4xl font-bold text-center my-10">
+        Instructor
+      </h2>
       {!instructor ? (
         <div className="flex items-center justify-center min-h-screen">
           <span className="loading loading-ring loading-lg text-secondary mx-auto "></span>
         </div>
       ) : (
         <div className="grid lg:grid-cols-3 gap-20  my-5 mx-5 lg:mx-0">
-          {instructor?.map((cls) => (
+          {instructor?.slice(0, 6).map((cls) => (
             <div key={cls._id} className="border px-8 py-10 rounded-xl">
               <div className=" rounded-3xl">
                 <img
@@ -44,4 +47,4 @@ const PopularInstructor = () => {
   );
 };
 
-export default PopularInstructor;
+export default Instructor;

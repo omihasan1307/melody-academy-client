@@ -8,8 +8,11 @@ import { AuthContext } from "../providers/AuthProvider";
 
 const Classes = () => {
   const { users } = useContext(AuthContext);
+
   const [classData, isLoading, refetch] = useClasses();
   const [updateData, setUpdateData] = useState("");
+
+  console.log(classData);
 
   const handleDelete = (_id) => {
     console.log(_id);
@@ -37,7 +40,6 @@ const Classes = () => {
 
   const handleUpdate = (event) => {
     event.preventDefault();
-
     const form = event?.target;
     const className = form?.className?.value;
     const price = form?.price?.value;
@@ -96,8 +98,8 @@ const Classes = () => {
                   <td>{cls.className}</td>
                   <td>${cls.price}</td>
                   <td>{cls.seats}</td>
-                  <td>0 (students)</td>
-                  <td>... </td>
+                  <td> {cls.enroll ? cls.enroll : "0"} (students)</td>
+                  <td>{cls.feedback ? cls.feedback : "no feedback"}</td>
                   {cls.status === null ? (
                     <td>
                       {" "}
