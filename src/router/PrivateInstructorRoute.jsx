@@ -3,6 +3,7 @@ import useRole from "../hooks/useRole";
 import { useContext } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 
+
 const PrivateInstructorRouter = ({ children }) => {
   const { users, loading } = useContext(AuthContext);
   const [role, isLoading] = useRole();
